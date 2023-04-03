@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      # build docker file under the current directory
+      # and where the command is going to run from
+      context: .
+    ports:
+      - "8000:8000"
+    volumes:
+      # map app directory in the project to the app directory of the container
+      # this way the local changes are going to be reflected in the container in
+      # real time
+      - ./app:/app
+    # default command to run the service
+    command: >
+      sh -c "python manage.py runserver 0.0.0.0:8000"

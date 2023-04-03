@@ -1,0 +1,2 @@
+Django>=3.2.4,<3.3 #the containers this way will have the latest bug fixed but the version is going to be the same
+djangorestframework>=3.12.4,<3.13
