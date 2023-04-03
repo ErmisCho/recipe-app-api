@@ -6,6 +6,8 @@ services:
       # build docker file under the current directory
       # and where the command is going to run from
       context: .
+      args:
+        - DEV=true
     ports:
       - "8000:8000"
     volumes:

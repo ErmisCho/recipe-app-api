@@ -6,6 +6,7 @@ LABEL maintainer="ermis"
 ENV PYTHONBUFFERED 1
 
 COPY ./requirements.txt /tmp/requirements.txt
+COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./app /app
 WORKDIR /app
 EXPOSE 8000
@@ -14,10 +15,16 @@ EXPOSE 8000
 
 # create a virtual Python environment for our project for any conflicting dependencies of our project
 # and other project dependencies in the docker image 
+
+# if this Dockerfile runs through the docker-compose.yml, then the ARG from there is going to prevail
+ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     #it will install inside the venv because we are specifying the full path for pip inside our venv
     /py/bin/pip install -r /tmp/requirements.txt && \
+    if [ $DEV = "true" ]; \
+    then /py/bin/pip install -r /tmp/requirements.dev.txt ; \
+    fi && \
     rm -rf /tmp && \
     adduser \
     --disabled-password \
