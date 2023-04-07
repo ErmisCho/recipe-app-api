@@ -24,7 +24,7 @@ class CommandTests(SimpleTestCase):
         # checks command is set up correctly and can be called
         call_command("wait_for_db")
 
-        patched_check.assert_called_once_with(database=["default"])
+        patched_check.assert_called_once_with(databases=["default"])
 
     # with this the actual execution time is not going to be increased
     @patch('time.sleep')
@@ -33,7 +33,8 @@ class CommandTests(SimpleTestCase):
 
         # The first two times when the mocked method is called
         # expect 2 "Psycopg2Errors" and then 3 "OperationalErrors"
-        # Psycopg2Error: application hasn't started yet, so it's not ready to accept connections
+        # Psycopg2Error: application hasn't started yet,
+        # so it's not ready to accept connections
         # OperationalError: the testing database has not been set up yet
         # [True]: 6th time the mocked method is going to return "True"
         patched_check.side_effect = [Psycopg2Error] * 2 + \
@@ -43,4 +44,4 @@ class CommandTests(SimpleTestCase):
 
         # this method should be called 6 times
         self.assertEqual(patched_check.call_count, 6)
-        patched_check.assert_called_with(database=["default"])
+        patched_check.assert_called_with(databases=["default"])
