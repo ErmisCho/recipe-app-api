@@ -130,3 +130,5 @@ dmypy.json
 app/app/tests.py
 .gitignore
 app/app/calc.py
+app/app/settings/dev.py
+app/app/settings/prod.py
