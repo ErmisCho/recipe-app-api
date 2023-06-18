@@ -27,11 +27,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '--secret-key-to-be-replaced--'
 
 if os.path.exists("settings/dev.py"):
-    from settings.prod import *
-elif os.path.exists("settings/github.py"):
-    from settings.prod import *
+    from settings.dev import *
 elif os.path.exists("settings/prod.py"):
     from settings.prod import *
+elif os.path.exists("settings/github.py"):
+    from settings.github import *
 
 # ENVIRONMENT_TYPE = config("ENVIRONMENT_TYPE")
 # SECRET_KEY = config("SECRET_KEY", default="")
