@@ -6,7 +6,7 @@ from user import views
 
 app_name = 'user'  # used for the reverse mapping in the file "test_user_api.py"
 
-url_patterns = [
+urlpatterns = [
     # used for the reverse mapping in the file "test_user_api.py"
-    path('create/', views.CreateUserView.as_view(), name='create')
+    path('create/', views.CreateUserView.as_view(), name='create'),
 ]
