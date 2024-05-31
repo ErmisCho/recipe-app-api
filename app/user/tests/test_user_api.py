@@ -72,14 +72,13 @@ class PublicUserApiTests(TestCase):
             'email': 'test@example.com',
             'password': 'test-user-password123',
         }
+        get_user_model().objects.create(**user_details)
 
-        create_user(**user_details)
         payload = {
             'email': user_details['email'],
             'password': user_details['password'],
         }
-
-        res = self.client.psot(TOKEN_URL, payload)
+        res = self.client.post(TOKEN_URL, payload)
 
         self.assertIn('token', res.data)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
