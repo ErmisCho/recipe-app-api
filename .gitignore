@@ -135,3 +135,4 @@ app/app/settings/prod.py
 .vagrant/rgloader/loader.rb
 Vagrantfile
 .vagrant/machines/default/virtualbox/vagrant_cwd
+notes.txt
