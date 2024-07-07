@@ -258,7 +258,8 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         new_tag = Tag.objects.get(user=self.user, name='Lunch')
         # you don't need when you use many to many fields, because
-        # recipe.tags.all() makes a new fresh query, so we don't need recipe.refresh_from_db()
+        # recipe.tags.all() makes a new fresh query,
+        # so we don't need recipe.refresh_from_db()
         self.assertIn(new_tag, recipe.tags.all())
 
     def test_update_recipe_assign_tag(self):
