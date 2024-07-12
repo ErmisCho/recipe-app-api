@@ -14,18 +14,18 @@ EXPOSE 8000
 # we could add multiple RUN commands but then we would have multiple image layers
 
 # create a virtual Python environment for our project for any conflicting dependencies of our project
-# and other project dependencies in the docker image 
+# and other project dependencies in the docker image
 
 # if this Dockerfile runs through the docker-compose.yml, then the ARG from there is going to prevail
 ARG DEV=false
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache postgresql-client && \
+    apk add --update --no-cache postgresql-client jpeg-dev && \
 
     # --virtual: sets a virtual dependency package, it kind groups the packages we install into .temp-build-deps
     # so this grouped package can be removed later
     apk add --update --no-cache --virtual .tmp-build-deps\
-    build-base postgresql-dev musl-dev &&\
+    build-base postgresql-dev musl-dev zlib zlib-dev &&\
     #it will install inside the venv because we are specifying the full path for pip inside our venv
     /py/bin/pip install -r /tmp/requirements.txt && \
     if [ $DEV = "true" ]; \
@@ -38,7 +38,11 @@ RUN python -m venv /py && \
     adduser \
     --disabled-password \
     --no-create-home \
-    django-user
+    django-user &&\
+    mkdir -p /vol/web/media &&\
+    mkdir -p /vol/web/static &&\
+    chown -R django-user:django-user /vol &&\
+    chmod -R 755 /vol
 
 ENV PATH="/py/bin:$PATH"
 

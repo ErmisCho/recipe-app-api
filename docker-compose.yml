@@ -15,6 +15,7 @@ services:
       # this way the local changes are going to be reflected in the container in
       # real time
       - ./app:/app
+      - dev-static-data:vol/web
     # default command to run the service
     command: >
       sh -c "python manage.py wait_for_db &&
@@ -41,3 +42,4 @@ services:
 volumes:
   # volume-name: <if empty -> default file system location for the name volumes>
   dev-db-data:
+  dev-static-data:
